@@ -14,6 +14,7 @@ import /init.carrier.rc
 import /init.rilcommon.rc
 import /init.container.rc
 import /init.fac.rc
+import /init.espheni.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -25,9 +26,11 @@ on early-init
     start ueventd
 
 # Configure SEAndroid booleans and enforcing mode
-     setsebool debugfs 1
+     setsebool debugfs 0
+     setenforce 0
 
 on init
+    setprop ro.boot.selinux 0
     sysclktz 0
 
     loglevel 3
@@ -331,7 +334,7 @@ on post-fs
 on post-fs-data
 # [ SEC_SELINUX_PORTING COMMON
     # Reload SE Android Policy
-    setprop selinux.reload_policy 1
+    setprop selinux.reload_policy 0
 
     # sec_efs_file
     mkdir /efs/sec_efs 0775 radio system
@@ -454,6 +457,14 @@ on post-fs-data
     restorecon /data/log
     restorecon /data/anr
 
+    # Added for Playready DCM DRM Support
+    mkdir /data/.dcmdrm 0775
+    chown drm system /data/.dcmdrm
+    chmod 0775 /data/.dcmdrm
+    mkdir /data/.dcmdrm/.playready 0775
+    chown drm system /data/.dcmdrm/.playready
+    chmod 0775 /data/.dcmdrm/.playready
+
     # create dalvik-cache, so as to enforce our permissions
     mkdir /data/dalvik-cache 0771 root root
     mkdir /data/dalvik-cache/profiles 0711 system system
@@ -547,7 +558,7 @@ on post-fs-data
 # [ SEC_SELINUX_PORTING COMMON
     # reload_policy is move to above
     # Reload policy from /data/security if present.
-    #setprop selinux.reload_policy 1
+    #setprop selinux.reload_policy 0
 # ] SEC_SELINUX_PORTING COMMON
     
     # We restorecon /data when file_contexts is changed(SPD, FOTA, HOME)
@@ -1223,7 +1234,7 @@ service lpm /system/bin/lpm
 #start SEC_PRODUCT_FEATURE_COMMON_SUPPORT_SE_FOR_ANDROID
 # Reload SE Android Policy for MDM
 on property:persist.security.mdm.policy=1
-    setprop selinux.reload_policy 1
+    setprop selinux.reload_policy 0
 #end SEC_PRODUCT_FEATURE_COMMON_SUPPORT_SE_FOR_ANDROID
 
 service console /system/bin/sh
@@ -1573,7 +1584,7 @@ on property:sys.boot_completed=1
     
 # Reload SE Android Policy for MDM
 on property:persist.security.mdm.policy=1
-    setprop selinux.reload_policy 1
+    setprop selinux.reload_policy 0
 # ] SEC_SELINUX_PORTING COMMON
 
 # icd

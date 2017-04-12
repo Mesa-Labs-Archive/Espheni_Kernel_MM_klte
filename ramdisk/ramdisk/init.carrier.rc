@@ -53,6 +53,16 @@ on boot
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
 
+# NFC_BROADCOM
+    chmod 0600 /dev/bcm2079x
+    chown nfc nfc /dev/bcm2079x
+    mkdir /data/bcmnfc
+    mkdir /data/bcmnfc/param
+    chmod 0700 /data/bcmnfc
+    chmod 0700 /data/bcmnfc/param
+    chown nfc nfc /data/bcmnfc
+    chown nfc nfc /data/bcmnfc/param
+
 # DualWave
     chown system system /sys/kernel/DualWave/sound/DUALWAVE_CONFIG
 
