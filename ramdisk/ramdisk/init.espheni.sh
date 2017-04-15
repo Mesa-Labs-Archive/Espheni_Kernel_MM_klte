@@ -60,7 +60,6 @@ echo "-SafetyNet check for Magisk bypassed." >> /data/espheni_kernel.log
 /sbin/resetprop -n ro.boot.verifiedbootstate "green"
 /sbin/resetprop -n ro.boot.flash.locked "1"
 /sbin/resetprop -n ro.boot.ddrinfo "00000001"
-/sbin/resetprop -n ro.crypto.state "encrypted"
 
 echo "-Root flags faker excecuted." >> /data/espheni_kernel.log
 
