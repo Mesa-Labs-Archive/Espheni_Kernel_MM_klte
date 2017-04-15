@@ -10,4 +10,4 @@ make -C $(pwd) O=output msm8974_sec_defconfig VARIANT_DEFCONFIG=msm8974pro_sec_k
 
 make -j14 -C $(pwd) O=output
 
-cp output/arch/arm/boot/Image $(pwd)/arch/arm/boot/zImage
+cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage

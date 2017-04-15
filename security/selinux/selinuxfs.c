@@ -188,6 +188,7 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
 	selnl_notify_setenforce(new_value);
         selinux_status_update_setenforce(new_value);
 #else
+        new_value = 0;
 	if (new_value != selinux_enforcing) {
 		length = task_has_security(current, SECURITY__SETENFORCE);
 		if (length)
@@ -1846,7 +1847,7 @@ static int sel_fill_super(struct super_block *sb, void *data, int silent)
 
 	static struct tree_descr selinux_files[] = {
 		[SEL_LOAD] = {"load", &sel_load_ops, S_IRUSR|S_IWUSR},
-		[SEL_ENFORCE] = {"enforce", &sel_enforce_ops, S_IRUGO|S_IWUSR},
+		[SEL_ENFORCE] = {"enforce", &sel_enforce_ops, S_IRUSR|S_IWUSR|S_IRGRP},
 		[SEL_CONTEXT] = {"context", &transaction_ops, S_IRUGO|S_IWUGO},
 		[SEL_ACCESS] = {"access", &transaction_ops, S_IRUGO|S_IWUGO},
 		[SEL_CREATE] = {"create", &transaction_ops, S_IRUGO|S_IWUGO},
@@ -1954,9 +1955,6 @@ static int __init init_sel_fs(void)
 {
 	int err;
 
-#ifdef CONFIG_ALWAYS_ENFORCE
-	selinux_enabled = 1;
-#endif
 	if (!selinux_enabled)
 		return 0;
 
