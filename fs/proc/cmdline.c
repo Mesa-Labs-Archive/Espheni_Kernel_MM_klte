@@ -2,27 +2,13 @@
 #include <linux/init.h>
 #include <linux/proc_fs.h>
 #include <linux/seq_file.h>
-#include <linux/module.h>
 #include <asm/setup.h>
 
 static char new_command_line[COMMAND_LINE_SIZE];
 
 static int cmdline_proc_show(struct seq_file *m, void *v)
 {
-	char *temp_new_command_line, *temp;
-	int i;
-	
-	temp_new_command_line = kmalloc(strlen(new_command_line)+1, GFP_KERNEL);
-	memcpy(temp_new_command_line, new_command_line, strlen(new_command_line)+1);
-	temp=strstr(temp_new_command_line, "array");
-
-	if (temp!=NULL) {
-		for(i=0;i<20;i++)	*(temp+i)='*';
-	}
-
-	seq_printf(m, "%s\n", temp_new_command_line);
-
-	kfree(temp_new_command_line);
+	seq_printf(m, "%s\n", new_command_line);
 	return 0;
 }
 
