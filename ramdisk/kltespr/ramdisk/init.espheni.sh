@@ -57,7 +57,6 @@ echo "-SafetyNet check for Magisk bypassed." >> /data/espheni_kernel.log
 
 # Set Root flags to Stock
 /sbin/resetprop -n ro.boot.veritymode "enforcing"
-/sbin/resetprop -n ro.boot.verifiedbootstate "green"
 /sbin/resetprop -n ro.boot.flash.locked "1"
 /sbin/resetprop -n ro.boot.ddrinfo "00000001"
 
