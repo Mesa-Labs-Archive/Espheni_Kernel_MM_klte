@@ -1790,7 +1790,7 @@
 /dev/usb/tty.*	u:object_r:usb_device:s0
 /dev/usb_mtp_gadget.*	u:object_r:mtp_device:s0
 /dev/validity(/.*)?	u:object_r:validity_device:s0
-/dev/vfsspi	u:object_r:vfsspi_device:s0
+/dev/vfsspi	u:object_r:validity_device:s0
 /dev/video26        u:object_r:video_scaler_device:s0
 /dev/video29        u:object_r:video_scaler_device:s0
 /dev/video4[0-9]        u:object_r:camera_device:s0
@@ -2243,7 +2243,7 @@
 /data/system/users/[0-9]*/fpdata(/.*)?                u:object_r:fingerprintd_data_file:s0
 /data/system/users(/.*)/wallpaper	u:object_r:wallpaper_file:s0
 /data/system/users(/.*)/wallpaper2	u:object_r:wallpaper_file:s0
-/data/validity(/.*)?                                  u:object_r:vcsFPService_data_file:s0
+/data/validity(/.*)?                                  u:object_r:fingerprintd_data_file:s0
 /data/tee(/.*)?	                        u:object_r:tee_data_file:s0
 
 # DATA file of slsi_common
