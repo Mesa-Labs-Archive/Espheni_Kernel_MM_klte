@@ -57,10 +57,17 @@ echo "-SafetyNet check for Magisk bypassed." >> /data/espheni_kernel.log
 
 # Set Root flags to Stock
 /sbin/resetprop -n ro.boot.veritymode "enforcing"
+/sbin/resetprop -n ro.boot.verifiedbootstate "green"
 /sbin/resetprop -n ro.boot.flash.locked "1"
 /sbin/resetprop -n ro.boot.ddrinfo "00000001"
 
 echo "-Root flags faker excecuted." >> /data/espheni_kernel.log
+
+# Init.d
+chmod 775 /system/etc/init.d/*
+busybox run-parts /system/etc/init.d
+
+echo "-Init.d scripts excecuted." >> /data/espheni_kernel.log
 
 echo " " >> /data/espheni_kernel.log
 echo "excecuted on $(date +"%d-%m-%Y %r" )" >> /data/espheni_kernel.log
