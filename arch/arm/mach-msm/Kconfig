@@ -4794,7 +4794,7 @@ config TIMA_RKP_30
        bool "Enable RKP TIMA 3.0 features"
        depends on (ARCH_MSM8974PRO || ARCH_MSM8226 || ARCH_MSM8926 || ARCH_MSM8926_LTE)
        depends on TIMA_RKP
-       default y
+       default n
        help
          RKP 3.0 features, enabled for msm8974pro only
 
@@ -4802,7 +4802,7 @@ config TIMA_RKP_COHERENT_TT
        bool
        depends on TIMA_RKP_30
        depends on ARCH_MSM8974PRO
-       default y 
+       default n 
        help
          RKP cache coherency feature- depends on corresponding TZ RKP code!!!
 

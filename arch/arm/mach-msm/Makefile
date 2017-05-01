@@ -519,6 +519,7 @@ obj-$(CONFIG_SEC_THERMISTOR) += sec_thermistor.o msm8974-thermistor.o
 endif
 obj-$(CONFIG_GSM_MODEM_SPRD6500) += board-sprd6500-spi.o board-sprd6500-modems.o
 
+ifdef CONFIG_CHARGER_MAX77804K
 obj-$(CONFIG_FORCE_FAST_CHARGE) += fastchg.o
-
 obj-$(CONFIG_CHARGE_LEVEL) += charge_level.o
+endif

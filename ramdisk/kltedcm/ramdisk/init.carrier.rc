@@ -1,0 +1,327 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on init
+    export EXTERNAL_STORAGE_DOCOMO /storage/extSdCard
+    export PHONEBOOK_EXCHANGE_PKG_DOCOMO "com.samsung.android.exchange"
+
+on early-boot
+    chown bluetooth net_bt_stack /dev/ttyHS0
+    chmod 0660 /dev/ttyHS0
+
+# permissions for Multiverse
+    chown system system /sys/class/sec/Multiverse/Brane
+    chmod 0600 /sys/class/sec/Multiverse/Brane
+
+# efs
+    chmod 0660 /dev/block/mmcblk0p12
+    chown system system /dev/block/mmcblk0p12
+
+on init
+
+# service for NEXTI provisioning app
+service secprov_nexti /system/bin/secprov_nexti
+    class main
+    user root
+    disabled
+    oneshot
+
+# start for NEXTI provisioning app
+on property:sys.qseecomd.enable=true
+    start secprov_nexti
+
+on post-fs-data
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+    mkdir /data/one-seg 0775 system system
+    chown system system /data/one-seg
+    chmod 0775 /data/one-seg
+
+#Private Mode
+    mkdir /mnt/shell 0750 shell shell
+    mkdir /mnt/shell/privatemode 0700 system system
+    mkdir /storage/Private 0000 system system
+    mkdir /data/privatemode 0770 system system
+    chown system system /data/privatemode
+    restorecon /data/privatemode
+
+# JPN: For /efs/imei folder permission
+    chown radio radio /efs/imei
+    chmod 0775 /efs/imei
+
+# NTT_NEXTI_PV_PLAYREADY - S
+    mkdir /data/DxDrm 0760 media media
+    mkdir /data/dxprdy 0760 media media
+    mkdir /data/dxprdy/dxprdy 0760 media media
+    chown -R media media /data/DxDrm
+# NTT_NEXTI_PV_PLAYREADY - E
+
+# FeliCa
+    mkdir /efs/sec_efs/FeliCaLock 0770 system felicalock
+    copy /efs/FeliCaLock/01 /efs/sec_efs/FeliCaLock/01
+    copy /efs/FeliCaLock/02 /efs/sec_efs/FeliCaLock/02
+    copy /efs/FeliCaLock/03 /efs/sec_efs/FeliCaLock/03
+    copy /efs/FeliCaLock/04 /efs/sec_efs/FeliCaLock/04
+    copy /efs/FeliCaLock/05 /efs/sec_efs/FeliCaLock/05
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/01
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/02
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/03
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/04
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/05
+    chmod 0644 /efs/sec_efs/FeliCaLock/01
+    chmod 0600 /efs/sec_efs/FeliCaLock/02
+    chmod 0644 /efs/sec_efs/FeliCaLock/03
+    chmod 0600 /efs/sec_efs/FeliCaLock/04
+    chmod 0600 /efs/sec_efs/FeliCaLock/05
+    rm /efs/FeliCaLock/01
+    rm /efs/FeliCaLock/02
+    rm /efs/FeliCaLock/03
+    rm /efs/FeliCaLock/04
+    rm /efs/FeliCaLock/05
+    rmdir /efs/FeliCaLock/
+
+# Japan Add NFC Type Setting(Osaifu.cfg)
+    mkdir /data/misc/osaifu 0755 system system
+    chmod 644 /data/misc/osaifu/osaifu.cfg
+    chown system system /data/misc/osaifu/osaifu.cfg
+
+# 3LM settings
+    setprop ro.3lm.production 1
+    setprop ro.3LM.extended 1
+    setprop ro.3LM.oem_sd_encryption 1
+    setprop ro.3LM.oem_manifest 3
+
+# TMM delition
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBAudioCodingFormatCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBAudioComponentCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBCopyControlMethodCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBFileFormatCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBGenreCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBGenreCS2.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBHowRelatedCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBOutputPortCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBParentalRatingCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBPromotionalTypeCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBPurchaseTypeCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBRoleCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBUnitTypeCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ARIBVisualCodingFormatCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMContentTypeCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMDeliveryStatusCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMFileFormatCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMHowRelatedCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMIntendedAudienceCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMItemCategoryCS.xml
+    rm /data/mmb/MmbFcCtlMw/dic/ISDBTMMStereoVideoFormatCS.xml
+    rm /data/mmb/MmbStCtlMw/nit.info
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_1
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_2
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_3
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_4
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_5
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_6
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_RECEIVE_7
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_REGIST
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_1
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_2
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_3
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_4
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_5
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_6
+    rm /data/mmb/common/fcctl/LOCAL_SOCKET_MMBFCCTLMW_SEND_7
+    rm /data/mmb/common/semngmw/mmbextsetting.db
+    rm /data/mmb/common/semngmw/mmbextsetting.lock
+    rm /data/mmb/common/streccm/MMBSTRECCMMW_SOCKET
+    rmdir /data/mmb/MmbCaCasDrmMw
+    rmdir /data/mmb/MmbFcCtlMw/dic
+    rmdir /data/mmb/MmbFcCtlMw
+    rmdir /data/mmb/MmbStCtlMw
+    rmdir /data/mmb/MmbFcMp4Mw
+    rmdir /data/mmb/MmbFcCtlMwMnt
+    rmdir /data/mmb/common/MmbFcCtlMw
+    rmdir /data/mmb/common/fcctl
+    rmdir /data/mmb/common/semngmw
+    rmdir /data/mmb/common/streccm
+    rmdir /data/mmb/common
+    rmdir /data/mmb
+    rmdir /data/.dcmdrm/.sec_sctime
+
+on boot
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+    chown system system /dev/isdbt
+    chmod 0660 /dev/isdbt
+
+# permission for Input Device(Touchkey).
+    chmod 0660 /sys/class/input/input1/enabled
+    chown system system /sys/class/input/input1/enabled
+    chmod 0660 /sys/class/input/input2/enabled
+    chown system system /sys/class/input/input2/enabled
+    chown radio system /sys/class/sec/sec_touchkey/touch_sensitivity
+    chown radio system /sys/class/sec/sec_touchkey/touchkey_firm_update
+    chown system radio /sys/class/sec/sec_touchkey/glove_mode
+    chown system radio /sys/class/sec/sec_touchkey/flip_mode
+    chown system radio /sys/class/sec/sec_touchkey/1mm_mode
+    chown system radio /sys/class/sec/sec_touchkey/boost_level
+
+# MSP FactoryApp
+    mkdir /efs/FactoryApp 0775 system system
+
+# permissions for bluetooth.
+    setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
+    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+    chown radio net_bt_stack /efs/bluetooth/bt_addr
+    chmod 0640 /efs/bluetooth/bt_addr
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+
+# DualWave
+    chown system system /sys/kernel/DualWave/sound/DUALWAVE_CONFIG
+
+# bluetooth LPM
+    chmod 0660 /proc/bluetooth/sleep/lpm
+    chmod 0220 /proc/bluetooth/sleep/btwrite
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
+    chmod 0600 /dev/btlock
+    chown bluetooth bluetooth /dev/btlock
+
+# permission for Expander.
+    chown system system /sys/class/sec/expander/expgpio
+
+# permission for mDNIe
+    chown system system /sys/class/mdnie/mdnie/sensorRGB
+
+# permission for IPSec
+    chown root system /dev/socket
+    chmod 0775 /dev/socket
+
+# Fingerprint
+    mkdir /dev/validity 0770 system system
+    mkdir /data/validity 0770 system system
+
+# Fingerprint_sensor
+    chown system radio /sys/class/fingerprint/fingerprint/type_check
+
+# SSWAP
+    write /proc/sys/vm/swappiness 130
+
+# FINGERPRINT FRAMEWORK : starts fingerprintd
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+    group system
+
+# SENSOR FRAMEWORK : starts fingerprintService
+service vcsFPService /system/bin/vcsFPService
+    class late_start
+    user system
+    group system
+
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+service mobileTV /system/bin/SDtvService
+    class main
+    user system
+    group system radio audio camera graphics inet net_bt net_bt_admin net_raw sdcard_rw sdcard_r shell media media_rw
+
+# bluetooth dhcp config
+    service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+ # Felica
+service occreate /system/bin/occreate
+    class main
+    user system
+    group system
+    oneshot
+
+service mfsc /system/bin/mfsc
+    class core
+    user root
+    group system felicalock nfc
+    oneshot
+service mfdp /system/bin/mfdp
+    class core
+    user root
+    group system felicalock nfc
+    oneshot
+on fs
+
+  # Support Preload install apks
+    mkdir /preload 0771 system system
+
+#For Absolute Persistence Partition
+
+    mkdir /persdata 0755 system system
+    mkdir /persdata/absolute 0750 system system
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/persdata
+    check_fs /dev/block/platform/msm_sdcc.1/by-name/persdata ext4
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persdata /persdata/absolute nosuid nodev barrier=1
+
+    chown system system /persdata
+    chmod 0755 /persdata
+    chown system system /persdata/absolute
+    chmod 0750 /persdata/absolute
+
+# bootchecker
+service bootchecker /system/bin/bootchecker
+    class late_start
+    user system
+    group system log
+    oneshot
+
+# TODO: replace it with device's DEXPREOPT_BOOT_JARS
+
+# AT Distributor for factory test
+service at_distributor /system/bin/at_distributor
+    class late_start
+    user root
+    group radio misc log
+
+# diag app for cp uart
+service diag_uart_log /system/bin/diag_uart_log
+    class main
+    user root
+    group radio
+
+# umount service
+service umount_service /system/bin/umount /preload
+    disabled
+    oneshot
+
+# Support Preload install apks
+on property:persist.sys.storage_preload=1
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/hidden /preload nosuid nodev ro barrier=1
+    setprop storage.preload.complete 1
+
+on property:persist.sys.storage_preload=0
+    start umount_service
+
+# SSWAP
+service swapon /sbin/sswap -s -f 1280
+    class core
+    user root
+    group root
+    seclabel u:r:sswap:s0
+    oneshot
+
+# IPSec for VOLTE
+service ipsec-daemon /system/bin/IPSecService
+    class main
+    socket ipsec_socket stream 660 system system
+    user system
+    group system net_raw inet net_admin
+
+## WTL_EDM_START
+## EDM AuditLog
+service edmaudit /system/bin/edmaudit
+    class main
+    user root
+
+## WTL_EDM_END
+
