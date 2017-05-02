@@ -7,7 +7,7 @@ echo "EspheniKernel Build Script"
 echo "Coded by BlackMesa"
 echo "------------------------------------------"
 PS3='Please select the kernel variant you want to build: '
-options=("klte" "klteduos" "kltespr" "kltedcm" "Exit")
+options=("klte" "kltedcm" "kltedd" "klteduos" "kltespr" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -34,6 +34,52 @@ do
             read -n1 -r key
             break
 			;;
+        "kltedcm")
+            clear
+            echo "------------------------------------------"
+            echo "Building kernel for kltedcm..."
+            echo "------------------------------------------"
+            echo " "
+            export ARCH=arm
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export LOCALVERSION=-Espheni_Kernel_v1-kltedcm
+			rm -r -f output
+			mkdir output
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -j64 -C $(pwd) O=output
+			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
+            echo " "
+            echo "------------------------------------------"
+            echo "Kernel build finished."
+            echo "Image is located in /arch/arm/boot/zImage."
+            echo "Press any key for end the script."
+            echo "------------------------------------------"
+            read -n1 -r key
+            break
+            ;;
+        "kltedd")
+            clear
+            echo "------------------------------------------"
+            echo "Building kernel for kltedd..."
+            echo "------------------------------------------"
+            echo " "
+            export ARCH=arm
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export LOCALVERSION=-Espheni_Kernel_v1-kltedd
+			rm -r -f output
+			mkdir output
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedd_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output
+			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
+            echo " "
+            echo "------------------------------------------"
+            echo "Kernel build finished."
+            echo "Image is located in /arch/arm/boot/zImage."
+            echo "Press any key for end the script."
+            echo "------------------------------------------"
+            read -n1 -r key
+            break
+            ;;
         "klteduos")
             clear
             echo "------------------------------------------"
@@ -69,29 +115,6 @@ do
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
-			make -j64 -C $(pwd) O=output
-			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
-            echo " "
-            echo "------------------------------------------"
-            echo "Kernel build finished."
-            echo "Image is located in /arch/arm/boot/zImage."
-            echo "Press any key for end the script."
-            echo "------------------------------------------"
-            read -n1 -r key
-            break
-            ;;
-        "kltedcm")
-            clear
-            echo "------------------------------------------"
-            echo "Building kernel for kltedcm..."
-            echo "------------------------------------------"
-            echo " "
-            export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-kltedcm
-			rm -r -f output
-			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
 			make -j64 -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
