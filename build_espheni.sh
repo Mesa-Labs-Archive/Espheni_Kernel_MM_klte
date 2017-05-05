@@ -2,6 +2,8 @@
 # Coded by BlackMesa @EspheniKernel
 
 clear
+EK_VERSION=v1
+EK_DATE=$(date +%Y%m%d)
 echo "------------------------------------------"
 echo "EspheniKernel Build Script"
 echo "Coded by BlackMesa"
@@ -17,9 +19,10 @@ do
             echo "Building kernel for klte..."
             echo "------------------------------------------"
             echo " "
+			EK_VARIANT=klte
             export ARCH=arm
             export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-klte
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klte_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
@@ -40,9 +43,10 @@ do
             echo "Building kernel for kltedcm..."
             echo "------------------------------------------"
             echo " "
+			EK_VARIANT=kltedcm
             export ARCH=arm
             export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-kltedcm
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
@@ -63,9 +67,10 @@ do
             echo "Building kernel for kltedd..."
             echo "------------------------------------------"
             echo " "
+			EK_VARIANT=kltedd
             export ARCH=arm
             export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-kltedd
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedd_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
@@ -86,9 +91,10 @@ do
             echo "Building kernel for klteduos..."
             echo "------------------------------------------"
             echo " "
+			EK_VARIANT=klteduos
             export ARCH=arm
             export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-klteduos
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klteduos_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
@@ -109,9 +115,10 @@ do
             echo "Building kernel for kltespr..."
             echo "------------------------------------------"
             echo " "
+			EK_VARIANT=kltespr
             export ARCH=arm
             export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
-            export LOCALVERSION=-Espheni_Kernel_v1-kltespr
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
 			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
