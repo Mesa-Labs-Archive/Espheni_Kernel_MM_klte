@@ -46,6 +46,7 @@ echo "-Knox Faker excecuted." >> /data/espheni_kernel.log
 
 # Kernel Permissive
 setenforce 0
+stop auditd
 
 echo "-Kernel set to Permissive." >> /data/espheni_kernel.log
 
@@ -68,6 +69,16 @@ chmod 775 /system/etc/init.d/*
 busybox run-parts /system/etc/init.d
 
 echo "-Init.d scripts excecuted." >> /data/espheni_kernel.log
+
+# Deepsleep
+for i in `ls /sys/class/scsi_disk/`; do
+  cat /sys/class/scsi_disk/$i/write_protect 2>/dev/null | grep 1 >/dev/null
+  if [ $? -eq 0 ]; then
+    echo 'temporary none' > /sys/class/scsi_disk/$i/cache_type
+  fi
+done
+
+echo "-Deepsleep fix excecuted." >> /data/espheni_kernel.log
 
 echo " " >> /data/espheni_kernel.log
 echo "excecuted on $(date +"%d-%m-%Y %r" )" >> /data/espheni_kernel.log
