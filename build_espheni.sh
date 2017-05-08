@@ -21,7 +21,7 @@ do
             echo " "
 			EK_VARIANT=klte
             export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
@@ -45,7 +45,7 @@ do
             echo " "
 			EK_VARIANT=kltedcm
             export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
@@ -69,7 +69,7 @@ do
             echo " "
 			EK_VARIANT=kltedd
             export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
@@ -93,7 +93,7 @@ do
             echo " "
 			EK_VARIANT=klteduos
             export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
@@ -117,7 +117,7 @@ do
             echo " "
 			EK_VARIANT=kltespr
             export ARCH=arm
-            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/UBERTC-arm-linux-androideabi-4.9-326a1d868723/bin/arm-linux-androideabi-
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
