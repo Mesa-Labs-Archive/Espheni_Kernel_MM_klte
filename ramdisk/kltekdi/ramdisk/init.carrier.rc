@@ -1,0 +1,246 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on early-boot
+    chown bluetooth net_bt_stack /dev/ttyHS0
+    chmod 0660 /dev/ttyHS0
+
+# permissions for Multiverse
+    chown system system /sys/class/sec/Multiverse/Brane
+    chmod 0600 /sys/class/sec/Multiverse/Brane
+
+# efs
+    chmod 0660 /dev/block/mmcblk0p12
+    chown system system /dev/block/mmcblk0p12
+
+on init
+
+on post-fs-data
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+    mkdir /data/one-seg 0775 system system
+    chown system system /data/one-seg
+    chmod 0775 /data/one-seg
+
+#Private Mode
+    mkdir /mnt/shell 0750 shell shell
+    mkdir /mnt/shell/privatemode 0700 system system
+    mkdir /storage/Private 0000 system system
+    mkdir /data/privatemode 0770 system system
+    chown system system /data/privatemode
+    restorecon /data/privatemode
+# FeliCa
+    mkdir /efs/sec_efs/FeliCaLock 0770 system felicalock
+    copy /efs/FeliCaLock/01 /efs/sec_efs/FeliCaLock/01
+    copy /efs/FeliCaLock/02 /efs/sec_efs/FeliCaLock/02
+    copy /efs/FeliCaLock/03 /efs/sec_efs/FeliCaLock/03
+    copy /efs/FeliCaLock/04 /efs/sec_efs/FeliCaLock/04
+    copy /efs/FeliCaLock/05 /efs/sec_efs/FeliCaLock/05
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/01
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/02
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/03
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/04
+    chown felicalock felicalock /efs/sec_efs/FeliCaLock/05
+    chmod 0644 /efs/sec_efs/FeliCaLock/01
+    chmod 0600 /efs/sec_efs/FeliCaLock/02
+    chmod 0644 /efs/sec_efs/FeliCaLock/03
+    chmod 0600 /efs/sec_efs/FeliCaLock/04
+    chmod 0600 /efs/sec_efs/FeliCaLock/05
+    rm /efs/FeliCaLock/01
+    rm /efs/FeliCaLock/02
+    rm /efs/FeliCaLock/03
+    rm /efs/FeliCaLock/04
+    rm /efs/FeliCaLock/05
+    rmdir /efs/FeliCaLock/
+
+on boot
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+    chown system system /dev/isdbt
+    chmod 0660 /dev/isdbt
+
+# permission for Input Device(Touchkey).
+    chmod 0660 /sys/class/input/input1/enabled
+    chown system system /sys/class/input/input1/enabled
+    chmod 0660 /sys/class/input/input2/enabled
+    chown system system /sys/class/input/input2/enabled
+    chown radio system /sys/class/sec/sec_touchkey/touch_sensitivity
+    chown radio system /sys/class/sec/sec_touchkey/touchkey_firm_update
+    chown system radio /sys/class/sec/sec_touchkey/glove_mode
+    chown system radio /sys/class/sec/sec_touchkey/flip_mode
+    chown system radio /sys/class/sec/sec_touchkey/1mm_mode
+    chown system radio /sys/class/sec/sec_touchkey/boost_level
+
+# permissions for bluetooth.
+    setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
+    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+    chown radio net_bt_stack /efs/bluetooth/bt_addr
+    chmod 0640 /efs/bluetooth/bt_addr
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+
+# MSP FactoryApp
+    mkdir /efs/FactoryApp 0775 system system
+
+# DualWave
+    chown system system /sys/kernel/DualWave/sound/DUALWAVE_CONFIG
+
+# bluetooth LPM
+    chmod 0660 /proc/bluetooth/sleep/lpm
+    chmod 0220 /proc/bluetooth/sleep/btwrite
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
+    chmod 0600 /dev/btlock
+    chown bluetooth bluetooth /dev/btlock
+
+# permission for Expander.
+    chown system system /sys/class/sec/expander/expgpio
+
+# permission for mDNIe
+    chown system system /sys/class/mdnie/mdnie/sensorRGB
+
+# permission for IPSec
+    chown root system /dev/socket
+    chmod 0775 /dev/socket
+
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    4094,524400,1311012,4096,524400,1311012
+
+# Assign TCP buffer thresholds to be ceiling value of technology maximums
+# Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  1048576
+#    write /proc/sys/net/core/wmem_max  2097152
+
+# NAT Timeout
+    write /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_established 86400
+
+# Fingerprint
+    mkdir /dev/validity 0770 system system
+    mkdir /data/validity 0770 system system
+
+# Fingerprint_sensor
+    chown system radio /sys/class/fingerprint/fingerprint/type_check
+
+# SSWAP
+    write /proc/sys/vm/swappiness 130
+
+# FINGERPRINT FRAMEWORK : starts fingerprintd
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+    group system
+
+# SENSOR FRAMEWORK : starts fingerprintService
+service vcsFPService /system/bin/vcsFPService
+    class late_start
+    user system
+    group system
+
+# JPN: For MobileTV [ISDBT] \android\device\samsung\heroqltedcm\init.carrier.rc
+service mobileTV /system/bin/SDtvService
+    class main
+    user system
+    group system radio audio camera graphics inet net_bt net_bt_admin net_raw sdcard_rw sdcard_r shell media media_rw
+
+# bluetooth dhcp config
+    service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+ # Felica
+service occreate /system/bin/occreate
+    class main
+    user system
+    group system
+    oneshot
+
+service mfsc /system/bin/mfsc
+    class core
+    user root
+    group system felicalock nfc
+    oneshot
+service mfdp /system/bin/mfdp
+    class core
+    user root
+    group system felicalock nfc
+    oneshot
+on fs
+
+  # Support Preload install apks
+    mkdir /preload 0771 system system
+
+#For Absolute Persistence Partition
+
+    mkdir /persdata 0755 system system
+    mkdir /persdata/absolute 0750 system system
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/persdata
+    check_fs /dev/block/platform/msm_sdcc.1/by-name/persdata ext4
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persdata /persdata/absolute nosuid nodev barrier=1
+
+    chown system system /persdata
+    chmod 0755 /persdata
+    chown system system /persdata/absolute
+    chmod 0750 /persdata/absolute
+
+# bootchecker
+service bootchecker /system/bin/bootchecker
+    class late_start
+    user system
+    group system log
+    oneshot
+
+# TODO: replace it with device's DEXPREOPT_BOOT_JARS
+
+# AT Distributor for factory test
+service at_distributor /system/bin/at_distributor
+    class late_start
+    user root
+    group radio misc log
+
+# diag app for cp uart
+service diag_uart_log /system/bin/diag_uart_log
+    class main
+    user root
+    group radio
+
+# umount service
+service umount_service /system/bin/umount /preload
+    disabled
+    oneshot
+
+# Support Preload install apks
+on property:persist.sys.storage_preload=1
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/hidden /preload nosuid nodev ro barrier=1
+    setprop storage.preload.complete 1
+
+on property:persist.sys.storage_preload=0
+    start umount_service
+
+# SSWAP
+service swapon /sbin/sswap -s -f 1280
+    class core
+    user root
+    group root
+    seclabel u:r:sswap:s0
+    oneshot
+
+# IPSec for VOLTE
+service ipsec-daemon /system/bin/IPSecService
+    class main
+    socket ipsec_socket stream 660 system system
+    user system
+    group system net_raw inet net_admin
+
+## WTL_EDM_START
+## EDM AuditLog
+service edmaudit /system/bin/edmaudit
+    class main
+    user root
+
+## WTL_EDM_END
