@@ -46,7 +46,6 @@ echo "-Knox Faker excecuted." >> /data/espheni_kernel.log
 
 # Kernel Permissive
 setenforce 0
-stop auditd
 
 echo "-Kernel set to Permissive." >> /data/espheni_kernel.log
 
