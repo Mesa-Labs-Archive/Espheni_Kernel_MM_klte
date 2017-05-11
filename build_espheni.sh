@@ -9,7 +9,7 @@ echo "EspheniKernel Build Script"
 echo "Coded by BlackMesa"
 echo "------------------------------------------"
 PS3='Please select the kernel variant you want to build: '
-options=("klte" "kltedcm" "kltedd" "klteduos" "kltekdi" "kltespr" "Exit")
+options=("klte" "kltedcm" "kltedd" "klteduos" "kltekdi" "kltespr" "kltevzw" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -157,6 +157,30 @@ do
             read -n1 -r key
             break
             ;;
+        "kltevzw")
+            clear
+            echo "------------------------------------------"
+            echo "Building kernel for kltevzw..."
+            echo "------------------------------------------"
+            echo " "
+			EK_VARIANT=kltevzw
+            export ARCH=arm
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
+			rm -r -f output
+			mkdir output
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltevzw_defconfig SELINUX_DEFCONFIG=espheni_selinux_permissive_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output
+			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
+            echo " "
+            echo "------------------------------------------"
+            echo "Kernel build finished."
+            echo "Image is located in /arch/arm/boot/zImage."
+            echo "Press any key for end the script."
+            echo "------------------------------------------"
+            read -n1 -r key
+            break
+			;;
         "Exit")
             break
             ;;
