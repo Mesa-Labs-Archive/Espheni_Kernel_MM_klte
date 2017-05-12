@@ -79,6 +79,20 @@ done
 
 echo "-Deepsleep fix excecuted." >> /data/espheni_kernel.log
 
+# Google Services battery drain fixer by Alcolawl@xda
+pm enable com.google.android.gms/.update.SystemUpdateActivity
+pm enable com.google.android.gms/.update.SystemUpdateService
+pm enable com.google.android.gms/.update.SystemUpdateService$ActiveReceiver
+pm enable com.google.android.gms/.update.SystemUpdateService$Receiver
+pm enable com.google.android.gms/.update.SystemUpdateService$SecretCodeReceiver
+pm enable com.google.android.gsf/.update.SystemUpdateActivity
+pm enable com.google.android.gsf/.update.SystemUpdatePanoActivity
+pm enable com.google.android.gsf/.update.SystemUpdateService
+pm enable com.google.android.gsf/.update.SystemUpdateService$Receiver
+pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver
+
+echo "-Google Service Battery Drain fix excecuted." >> /data/espheni_kernel.log
+
 echo " " >> /data/espheni_kernel.log
 echo "excecuted on $(date +"%d-%m-%Y %r" )" >> /data/espheni_kernel.log
 echo "-----------------------------------" >> /data/espheni_kernel.log
