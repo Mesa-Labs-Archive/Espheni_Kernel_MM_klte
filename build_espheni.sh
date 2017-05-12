@@ -25,7 +25,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klte_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klte_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -j64 -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -49,7 +49,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -j64 -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -73,7 +73,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedd_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedd_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -97,7 +97,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klteduos_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klteduos_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -121,7 +121,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltekdi_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltekdi_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -j64 -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -145,7 +145,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -j64 -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
@@ -169,7 +169,7 @@ do
             export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
 			rm -r -f output
 			mkdir output
-			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltevzw_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig TIMA_DEFCONFIG=espheni_tima_defconfig
+			make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltevzw_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
 			make -C $(pwd) O=output
 			cp output/arch/arm/boot/zImage $(pwd)/arch/arm/boot/zImage
             echo " "
