@@ -44,11 +44,6 @@ mount -o rw,remount /system
 
 echo "-Knox Faker excecuted." >> /data/espheni_kernel.log
 
-# Kernel Permissive
-setenforce 0
-
-echo "-Kernel set to Permissive." >> /data/espheni_kernel.log
-
 # SafetyNet Bypass
 chmod 640 /sys/fs/selinux/enforce
 chmod 440 /sys/fs/selinux/policy

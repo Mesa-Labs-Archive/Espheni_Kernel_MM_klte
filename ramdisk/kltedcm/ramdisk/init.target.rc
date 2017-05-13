@@ -150,8 +150,6 @@ service qrngp /system/bin/qrngp
 
 on property:sys.boot_completed=1
     start qrngp
-    chmod 0664 /sys/fs/selinux/enforce
-    write /sys/fs/selinux/enforce 0 
 
 on property:sys.boot_completed=1
    write /proc/iccc_ready 1

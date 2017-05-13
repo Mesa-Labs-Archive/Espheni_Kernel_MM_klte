@@ -26,11 +26,9 @@ on early-init
     start ueventd
 
 # Configure SEAndroid booleans and enforcing mode
-     setsebool debugfs 0
-     setenforce 0
+     setsebool debugfs 1
 
 on init
-    setprop ro.boot.selinux 0
     sysclktz 0
 
     loglevel 3
