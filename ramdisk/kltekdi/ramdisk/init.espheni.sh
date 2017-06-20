@@ -44,20 +44,6 @@ mount -o rw,remount /system
 
 echo "-Knox Faker excecuted." >> /data/espheni_kernel.log
 
-# SafetyNet Bypass
-chmod 640 /sys/fs/selinux/enforce
-chmod 440 /sys/fs/selinux/policy
-
-echo "-SafetyNet check for Magisk bypassed." >> /data/espheni_kernel.log
-
-# Set Root flags to Stock
-/sbin/resetprop -n ro.boot.veritymode "enforcing"
-/sbin/resetprop -n ro.boot.verifiedbootstate "green"
-/sbin/resetprop -n ro.boot.flash.locked "1"
-/sbin/resetprop -n ro.boot.ddrinfo "00000001"
-
-echo "-Root flags faker excecuted." >> /data/espheni_kernel.log
-
 # Init.d
 chmod 775 /system/etc/init.d/*
 /system/xbin/busybox run-parts /system/etc/init.d
