@@ -60,7 +60,7 @@ echo "-Root flags faker excecuted." >> /data/espheni_kernel.log
 
 # Init.d
 chmod 775 /system/etc/init.d/*
-busybox run-parts /system/etc/init.d
+/system/xbin/busybox run-parts /system/etc/init.d
 
 echo "-Init.d scripts excecuted." >> /data/espheni_kernel.log
 
