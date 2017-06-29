@@ -1640,32 +1640,6 @@ qpnp_chg_set_appropriate_vddmax(struct qpnp_chg_chip *chip)
 				chip->delta_vddmax_mv);
 }
 
-#define MIN_DELTA_MV_TO_INCREASE_VDD_MAX	8
-#define MAX_DELTA_VDD_MAX_MV			80
-#define VDD_MAX_CENTER_OFFSET			4
-static void
-qpnp_chg_adjust_vddmax(struct qpnp_chg_chip *chip, int vbat_mv)
-{
-	int delta_mv, closest_delta_mv, sign;
-
-	delta_mv = chip->max_voltage_mv - VDD_MAX_CENTER_OFFSET - vbat_mv;
-	if (delta_mv > 0 && delta_mv < MIN_DELTA_MV_TO_INCREASE_VDD_MAX) {
-		pr_debug("vbat is not low enough to increase vdd\n");
-		return;
-	}
-
-	sign = delta_mv > 0 ? 1 : -1;
-	closest_delta_mv = ((delta_mv + sign * QPNP_CHG_BUCK_TRIM1_STEP / 2)
-			/ QPNP_CHG_BUCK_TRIM1_STEP) * QPNP_CHG_BUCK_TRIM1_STEP;
-	pr_debug("max_voltage = %d, vbat_mv = %d, delta_mv = %d, closest = %d\n",
-			chip->max_voltage_mv, vbat_mv,
-			delta_mv, closest_delta_mv);
-	chip->delta_vddmax_mv = clamp(chip->delta_vddmax_mv + closest_delta_mv,
-			-MAX_DELTA_VDD_MAX_MV, MAX_DELTA_VDD_MAX_MV);
-	pr_debug("using delta_vddmax_mv = %d\n", chip->delta_vddmax_mv);
-	qpnp_chg_set_appropriate_vddmax(chip);
-}
-
 static void
 qpnp_usbin_health_check_work(struct work_struct *work)
 {

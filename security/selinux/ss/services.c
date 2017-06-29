@@ -771,13 +771,9 @@ out:
 	kfree(t);
 
 #if defined(CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE)
- 	return -EPERM;
+	return -EPERM;
 #elif defined(CONFIG_SECURITY_SELINUX_NEVER_ENFORCE)
- 	return 0;
-#else
-  	if (!selinux_enforcing)
-  		return 0;
-  	return -EPERM;
+	return 0;
 #endif
 }
 
@@ -1525,13 +1521,9 @@ out:
 	kfree(t);
 	kfree(n);
 #if defined(CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE)
- 	return -EACCES;
+	return -EPERM;
 #elif defined(CONFIG_SECURITY_SELINUX_NEVER_ENFORCE)
 	return 0;
-#else
-  	if (!selinux_enforcing)
-  		return 0;
-  	return -EACCES;
 #endif
 }
 
@@ -1823,8 +1815,8 @@ static inline int convert_context_handle_invalid_context(struct context *context
 #if defined(CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE)
 	return -EINVAL;
 #elif !defined(CONFIG_SECURITY_SELINUX_NEVER_ENFORCE)
-  	if (selinux_enforcing)
-  		return -EINVAL;
+	if (selinux_enforcing)
+		return -EINVAL;
 #endif
 
 	if (!context_struct_to_string(context, &s, &len)) {

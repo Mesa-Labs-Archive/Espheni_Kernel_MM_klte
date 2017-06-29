@@ -3551,14 +3551,6 @@ config MSM_DEVFREQ_CPUBW
 	  agnostic interface to so that some of the devfreq governors can be
 	  shared across SoCs.
 
-config FORCE_FAST_CHARGE
-	bool "Force fast charging (AC/USB) by Yank555.lu"
-	default y
-	help
-	  A simple sysfs interface to force adapters that
-	  are detected as USB to charge as AC (1A/h) or to set
-	  custom charging currents for AC and USB.	  
-
 config MSM_AVS_HW
 	bool "Enable Adaptive Voltage Scaling (AVS)"
 	default n
@@ -4794,7 +4786,7 @@ config TIMA_RKP_30
        bool "Enable RKP TIMA 3.0 features"
        depends on (ARCH_MSM8974PRO || ARCH_MSM8226 || ARCH_MSM8926 || ARCH_MSM8926_LTE)
        depends on TIMA_RKP
-       default n
+       default y
        help
          RKP 3.0 features, enabled for msm8974pro only
 
@@ -4802,7 +4794,7 @@ config TIMA_RKP_COHERENT_TT
        bool
        depends on TIMA_RKP_30
        depends on ARCH_MSM8974PRO
-       default n 
+       default y 
        help
          RKP cache coherency feature- depends on corresponding TZ RKP code!!!
 
@@ -4941,16 +4933,15 @@ config FORCE_FAST_CHARGE
 	  custom charging currents for AC and USB.
 
 config PVS_LEVEL_INTERFACE
-	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
+	bool "Expose PVS level information in sys fs (Espheni Kernel)"
 	help
-	 Allow PVS level to be shown in Boeffla-Config app
+	 Allow PVS level to be shown in Kernel Auditor app
 
 config CHARGE_LEVEL
 	bool "Charge level interface"
 	default y
 	help
 	  Allows configuration of ac, usb and wireless charging levels
-
 endif
 
 config KERNEL_TEXT_MPU_PROT

@@ -2,7 +2,7 @@
 # Coded by BlackMesa @EspheniKernel
 
 clear
-EK_VERSION=v1
+EK_VERSION=v2
 EK_DATE=$(date +%Y%m%d)
 echo "------------------------------------------"
 echo "EspheniKernel Build Script"
@@ -259,8 +259,3 @@ do
         *) echo invalid option;;
     esac
 done
-
-
-
-
-

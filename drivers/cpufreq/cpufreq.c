@@ -652,6 +652,7 @@ static ssize_t store_enable_auto_hotplug(struct cpufreq_policy *policy,
 	return count;
 }
 
+
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
 cpufreq_freq_attr_ro(cpuinfo_max_freq);
