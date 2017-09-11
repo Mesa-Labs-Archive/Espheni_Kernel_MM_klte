@@ -8,8 +8,8 @@ echo "------------------------------------------"
 echo "EspheniKernel v2 Build Script"
 echo "Coded by BlackMesa"
 echo "------------------------------------------"
-PS3='Please select the kernel variant you want to build (1-10): '
-options=("klte" "kltechn" "kltechnduos" "kltedcm" "kltedd" "klteduos" "kltekdi" "kltekor" "kltespr" "kltevzw" "Exit")
+PS3='Please select the kernel variant you want to build (1-11): '
+options=("klte" "kltechn" "kltechnduos" "kltedcm" "kltedd" "klteduos" "kltekdi" "kltekor" "kltespr" "klteusc" "kltevzw" "Exit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -244,6 +244,33 @@ do
             mkdir output
             make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
             make -j64 -C $(pwd) O=output
+            mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
+            ./ramdisk/$EK_VARIANT/repackimg.sh
+            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            echo " "
+            echo "------------------------------------------"
+            echo "Kernel build finished."
+            echo "boot.img is located into the ramdisk folder of the variant you selected."
+            echo "Press any key for end the script."
+            echo "------------------------------------------"
+            read -n1 -r key
+            break
+            ;;
+        "klteusc")
+            clear
+            echo "------------------------------------------"
+            echo "Building kernel for klteusc..."
+            echo "------------------------------------------"
+            echo " "
+            EK_VARIANT=klteusc
+            export ARCH=arm
+            export CROSS_COMPILE=/home/blackmesa/Scrivania/Android/Sorgenti/Toolchain/hyper-arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+            export LOCALVERSION=-Espheni_Kernel-$EK_VERSION-$EK_VARIANT-$EK_DATE
+            make clean
+            rm -r -f output
+            mkdir output
+            make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klteusc_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
+            make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
             rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz

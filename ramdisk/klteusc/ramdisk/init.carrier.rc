@@ -1,0 +1,168 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+on early-boot
+    chown bluetooth net_bt_stack /dev/ttyHS0
+    chmod 0660 /dev/ttyHS0
+
+# permissions for Multiverse
+    chown system system /sys/class/sec/Multiverse/Brane
+    chmod 0600 /sys/class/sec/Multiverse/Brane
+
+# efs
+    chmod 0660 /dev/block/mmcblk0p12
+    chown system system /dev/block/mmcblk0p12
+
+on init
+
+# Create carrier folder for HiddenMenu
+on post-fs
+    mkdir /efs/carrier system system
+    chmod 0755 /efs/carrier
+
+on post-fs-data
+#Private Mode
+    mkdir /mnt/shell 0750 shell shell
+    mkdir /mnt/shell/privatemode 0700 system system
+    mkdir /storage/Private 0000 system system
+    mkdir /data/privatemode 0770 system system
+    chown system system /data/privatemode
+    restorecon /data/privatemode
+
+
+on boot
+# permission for Input Device(Touchkey).
+    chmod 0660 /sys/class/input/input1/enabled
+    chown system system /sys/class/input/input1/enabled
+    chown radio system /sys/class/sec/sec_touchkey/touch_sensitivity
+    chown radio system /sys/class/sec/sec_touchkey/touchkey_firm_update
+    chown system radio /sys/class/sec/sec_touchkey/glove_mode
+    chown system radio /sys/class/sec/sec_touchkey/flip_mode
+    chown system radio /sys/class/sec/sec_touchkey/boost_level
+
+# permissions for bluetooth.
+    setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
+    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+    chown radio net_bt_stack /efs/bluetooth/bt_addr
+    chmod 0640 /efs/bluetooth/bt_addr
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+
+# MSP FactoryApp
+    mkdir /efs/FactoryApp 0775 system system
+
+# DualWave
+    chown system system /sys/kernel/DualWave/sound/DUALWAVE_CONFIG
+
+# bluetooth LPM
+    chmod 0660 /proc/bluetooth/sleep/lpm
+    chmod 0220 /proc/bluetooth/sleep/btwrite
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_stack /proc/bluetooth/sleep/btwrite
+    chmod 0600 /dev/btlock
+    chown bluetooth bluetooth /dev/btlock
+
+# permission for Expander.
+    chown system system /sys/class/sec/expander/expgpio
+
+# permission for mDNIe
+    chown system system /sys/class/mdnie/mdnie/sensorRGB
+
+# Define TCP buffer sizes changing by uscc req.
+    setprop net.tcp.buffersize.evdo    4096,65535,65535,4096,65535,65535
+    setprop net.tcp.buffersize.1xrtt   4096,65535,65535,4096,65535,65535
+
+# bluetooth dhcp config
+
+# Fingerprint
+    mkdir /dev/validity 0770 system system
+    mkdir /data/validity 0770 system system
+
+# Fingerprint_sensor
+    chown system radio /sys/class/fingerprint/fingerprint/type_check
+
+# SSWAP
+    write /proc/sys/vm/swappiness 160
+
+# FINGERPRINT FRAMEWORK : starts fingerprintd
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+    group system
+
+# SENSOR FRAMEWORK : starts fingerprintService
+service vcsFPService /system/bin/vcsFPService
+    class late_start
+    user system
+    group system
+
+
+on fs
+  
+#For Absolute Persistence Partition 
+       
+    mkdir /persdata 0755 system system 
+    mkdir /persdata/absolute 0750 system system 
+  
+    wait /dev/block/platform/msm_sdcc.1/by-name/persdata 
+    check_fs /dev/block/platform/msm_sdcc.1/by-name/persdata ext4 
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persdata /persdata/absolute nosuid nodev barrier=1 
+      
+    chown system system /persdata 
+    chmod 0755 /persdata 
+    chown system system /persdata/absolute 
+    chmod 0750 /persdata/absolute
+
+# bootchecker
+service bootchecker /system/bin/bootchecker
+    class late_start
+    user system
+    group system log
+    oneshot
+
+
+# TODO: replace it with device's DEXPREOPT_BOOT_JARS
+
+# service for TZPR provisioning version check app
+service scranton_RD /system/bin/scranton_RD
+    class main
+    user root
+    disabled
+    oneshot
+
+# start for TZPR provisioning version check app
+on property:sys.qseecomd.enable=true
+    start scranton_RD
+
+    mkdir /efs/drm/playready 0775
+    chown drm system /efs/drm/playready
+    chmod 0775 /efs/drm/playready
+
+#InsideSecure VPN Client
+service vpnclientpm /system/bin/vpnclientpm -u 1000 -g 1000 \
+     -O /data/data/com.ipsec.service/vpnclientpm.txt \
+     -U rmnet,rmnet_usb,wlan,bt-pan,rndis,p2p,eth
+      socket vpnclientpm seqpacket 0600 system system
+      disabled
+on property:service.vpnclientpm.enable=1
+      start vpnclientpm
+on property:service.vpnclientpm.enable=0
+      stop vpnclientpm
+
+service swapon /sbin/sswap -s -f 1280
+    class core
+    user root
+    group root
+    seclabel u:r:sswap:s0
+    oneshot
+
+
+#RIL wants to change tcp_window_scaling
+on property:ril.tws=1
+    write /proc/sys/net/ipv4/tcp_window_scaling 1
+on property:ril.tws=0
+    write /proc/sys/net/ipv4/tcp_window_scaling 0
