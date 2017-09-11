@@ -27,7 +27,7 @@ do
             rm -r -f output
             mkdir output
             make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_klte_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
-            make -j64 -C $(pwd) O=output
+            make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
             rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
@@ -108,7 +108,7 @@ do
             rm -r -f output
             mkdir output
             make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltedcm_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
-            make -j64 -C $(pwd) O=output
+            make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
             rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
@@ -189,7 +189,7 @@ do
             rm -r -f output
             mkdir output
             make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltekdi_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
-            make -j64 -C $(pwd) O=output
+            make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
             rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
@@ -243,7 +243,7 @@ do
             rm -r -f output
             mkdir output
             make -C $(pwd) O=output espheni_msm8974_defconfig VARIANT_DEFCONFIG=espheni_msm8974pro_kltespr_defconfig SELINUX_DEFCONFIG=espheni_selinux_defconfig
-            make -j64 -C $(pwd) O=output
+            make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
             rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
