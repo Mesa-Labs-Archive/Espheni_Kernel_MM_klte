@@ -12,12 +12,13 @@ persist.radio.lte_vrte_ltd=1
 persist.radio.apm_sim_not_pwdn=1
 persist.radio.add_power_save=1
 persist.data.netmgrd.qos.enable=false
-persist.security.ams.enforcing=3
-ro.secure=1
+persist.security.ams.enforcing=0
+ro.secure=0
 ro.allow.mock.location=0
-ro.debuggable=0
-ro.adb.secure=1
-persist.sys.usb.config=askon
+ro.debuggable=1
+persist.service.adb.enable=1
+ro.adb.secure=0
+persist.sys.usb.config=mtp,adb
 ro.zygote=zygote32
 dalvik.vm.image-dex2oat-Xms=64m
 dalvik.vm.image-dex2oat-Xmx=64m
@@ -28,9 +29,11 @@ debug.atrace.tags.enableflags=0
 persist.sys.strict_op_enable=false
 persist.sys.whitelist=/system/etc/whitelist_appops.xml
 camera2.portability.force_api=1
-#
-# BOOTIMAGE_BUILD_PROPERTIES
-#
-ro.bootimage.build.date=Tue Feb 21 17:59:32 KST 2017
-ro.bootimage.build.date.utc=1487667572
-ro.bootimage.build.fingerprint=samsung/klteduosctc/klte:6.0.1/MMB29M/G9009WKEU1CQB2:user/test-keys
+# EspheniKernel Tweaks
+ro.securestorage.support=false
+androidboot.selinux=permissive
+ro.securestorage.knox=false
+ro.config.tima=0
+ro.config.rkp=false
+ro.config.knox=0
+wlan.wfd.hdcp=disable

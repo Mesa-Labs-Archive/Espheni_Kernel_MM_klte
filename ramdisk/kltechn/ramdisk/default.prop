@@ -24,5 +24,11 @@ debug.atrace.tags.enableflags=0
 persist.sys.strict_op_enable=false
 persist.sys.whitelist=/system/etc/whitelist_appops.xml
 camera2.portability.force_api=1
+# EspheniKernel Tweaks
 ro.securestorage.support=false
 androidboot.selinux=permissive
+ro.securestorage.knox=false
+ro.config.tima=0
+ro.config.rkp=false
+ro.config.knox=0
+wlan.wfd.hdcp=disable
