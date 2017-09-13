@@ -27,22 +27,12 @@
 # Coded by BlackMesa @EspheniKernel
 
 # Call kernel script
-on boot
-    start preboot
+service espheni-boot /system/bin/sh /init.espheni.sh
+    class main
+    user root
+    oneshot
 
 on property:sys.boot_completed=1
-    start afterboot
+    start espheni-boot
 
-service preboot /sbin/ek_preboot.sh
-    user root
-    seclabel u:r:init:s0
-    oneshot
-    disabled
-    
-service afterboot /sbin/ek_afterboot.sh
-    class late_start
-    user root
-    seclabel u:r:init:s0
-    oneshot
-    disabled
 
