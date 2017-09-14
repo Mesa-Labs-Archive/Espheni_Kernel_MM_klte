@@ -32,7 +32,7 @@
 #define CHG_THERM_INPUT_LIMIT_CURRENT 1800
 #define CHG_THERM_CHARGING_LIMIT_CURRENT 2400
 
-#define SECOND_TERMINATION_CURRENT 4
+//#define SECOND_TERMINATION_CURRENT 4
 
 #if defined(CONFIG_ARCH_MSM8974PRO)
 #define CHG_THEM_THEM_CHANNEL LR_MUX8_PU1_AMUX_THM4
@@ -684,8 +684,17 @@ static void smb1357_enable_charging(struct i2c_client *client, u8 enable)
 {
 	u8 buf;
 
-	if(enable == true)	buf = CMD_CHG_EN_VAL;
-	else				buf = CMD_CHG_DIS_VAL;
+	if(enable == true) {
+		buf = CMD_CHG_EN_VAL;
+		/* Watchdog timer enable : 72s */
+		smb1357_charger_masked_write_reg(client, CFG_10_REG,
+				WATCHDOG_TIMER, WATCHDOG_TIMER);
+	} else {
+		buf = CMD_CHG_DIS_VAL;
+		/* Watchdog timer disable */
+		smb1357_charger_masked_write_reg(client, CFG_10_REG,
+				WATCHDOG_TIMER_MASK, WATCHDOG_TIMER_DISABLE);
+	}
 
 	smb1357_charger_masked_write_reg(client, CMD_CHG_REG,
 		CMD_CHG_EN_MASK, buf);
@@ -1073,6 +1082,10 @@ static void smb1357_hw_init(struct i2c_client * client)
 	/* Enable batt irq */
 	smb1357_enable_batt_irq(client, false);
 
+	/* Watchdog timer disable */
+	smb1357_charger_masked_write_reg(client, CFG_10_REG,
+			WATCHDOG_TIMER_MASK, WATCHDOG_TIMER_DISABLE);
+
 	dev_info(&client->dev,"%s\n",__func__);
 	return;
 }
@@ -1091,9 +1104,9 @@ static void smb1357_set_default_data(struct i2c_client *client)
 			USBIN_ADAPTER_MASK, 0x60);
 		msleep(20);
 
-		/* USBIN ADAPTER : 5v or 9v */
+		/* USBIN ADAPTER : 5v to 9v */
 		smb1357_charger_masked_write_reg(client, CFG_C_REG,
-			USBIN_ADAPTER_MASK, 0x20);
+			USBIN_ADAPTER_MASK, 0x40);
 
 		/* APSD */
 		smb1357_set_APSD(client, false);
@@ -1133,15 +1146,19 @@ static int smb1357_get_charging_status(struct i2c_client *client)
 	int status = POWER_SUPPLY_STATUS_UNKNOWN;
 	u8 status_1 = 0;
 	u8 status_4 = 0;
+	u8 cfg_10_reg = 0;
+	u8 irq_g_reg = 0;
 
 	/* need delay to update charger status */
 	msleep(10);
 
 	smb1357_charger_i2c_read(client, STATUS_1_REG, &status_1);
 	smb1357_charger_i2c_read(client, STATUS_4_REG, &status_4);
+	smb1357_charger_i2c_read(client, CFG_10_REG, &cfg_10_reg);
+	smb1357_charger_i2c_read(client, IRQ_G_REG, &irq_g_reg);
 
-	dev_info(&client->dev,"chg status:s1[0x%2x],s4[0x%2x]\n",
-		status_1, status_4);
+	dev_info(&client->dev,"chg status:s1[0x%2x],s4[0x%2x]\n", status_1, status_4);
+	dev_info(&client->dev,"CFG_10_REG[0x%2x], IRQ_G_REG[0x%2x]\n", cfg_10_reg, irq_g_reg);
 
 	/* At least one charge cycle terminated,
 	 * Charge current < Termination Current
@@ -1487,7 +1504,9 @@ static void smb1357_charger_function_control(
 			} else {
 				if (charger->cable_type == POWER_SUPPLY_TYPE_POGODOCK)
 					smb1357data->pogo_2nd_charging = true;
-#ifndef SECOND_TERMINATION_CURRENT
+//#ifndef SECOND_TERMINATION_CURRENT
+				/* Disable Charging */
+				smb1357_enable_charging(client, false);
 				dev_info(&client->dev,
 					"2st %s : termination current (%dmA)\n",
 					__func__, charger->pdata->charging_current[
@@ -1495,7 +1514,8 @@ static void smb1357_charger_function_control(
 				term = smb1357_get_term_current_limit_data(
 					charger->pdata->charging_current[
 					charger->cable_type].full_check_current_2nd);
-#else
+//#else
+#if 0
 				/* Disable Charging */
 				smb1357_enable_charging(client, false);
 
@@ -1613,9 +1633,9 @@ static void smb1357_charger_function_control(
 			smb1357_set_APSD(client, false);
 		}
 
-		/* USBIN ADAPTER : 5V or 9V */
+		/* USBIN ADAPTER : 5V to 9V */
 		smb1357_charger_masked_write_reg(client, CFG_C_REG,
-			USBIN_ADAPTER_MASK, 0x20);
+			USBIN_ADAPTER_MASK, 0x40);
 
 		smb1357_set_auto_recharge(client, true);
 
@@ -1768,10 +1788,19 @@ static void smb1357_charger_otg_control(
 
 void smb1357_charger_shutdown(struct i2c_client *client)
 {
+	struct smb1357_charger_data *smb1357data = i2c_get_clientdata(client);
+	struct sec_charger_info *charger = smb1357data->charger;
+
+	/* Disable OTG */
+	charger->cable_type = POWER_SUPPLY_TYPE_BATTERY;
+	smb1357_charger_otg_control(client);
+
 	pr_info("%s: smb1357 Charging Disabled\n", __func__);
-	
 	smb1357_charger_masked_write_reg(client, CFG_E_REG,
 		HVDCP_ADAPTER_MASK, HVDCP_ADAPTER_5V);
+	/* Watchdog timer disable */
+	smb1357_charger_masked_write_reg(client, CFG_10_REG,
+			WATCHDOG_TIMER_MASK, WATCHDOG_TIMER_DISABLE);
 	return;
 }
 
@@ -3205,9 +3234,9 @@ extern void smb1357_charger_external_apsd(u8 enable)
 
 		smb1357_set_APSD(client, true);
 
-		/* USBIN ADAPTER : 5V or 9V */
+		/* USBIN ADAPTER : 5V to 9V */
 		smb1357_charger_masked_write_reg(client, CFG_C_REG,
-			USBIN_ADAPTER_MASK, 0x20);
+			USBIN_ADAPTER_MASK, 0x40);
 	}
 	dev_dbg(&client->dev,"%s enable [%d]\n", __func__, enable);
 shdn:
