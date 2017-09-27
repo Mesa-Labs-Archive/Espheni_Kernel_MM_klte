@@ -30,7 +30,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -57,7 +57,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -84,7 +84,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -111,7 +111,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -138,7 +138,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -165,7 +165,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -192,7 +192,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -219,7 +219,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -246,7 +246,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -273,7 +273,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
@@ -300,7 +300,7 @@ do
             make -C $(pwd) O=output
             mv output/arch/arm/boot/zImage $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-zImage
             ./ramdisk/$EK_VARIANT/repackimg.sh
-            rm -f ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz
+            mv $(pwd)/ramdisk/$EK_VARIANT/ramdisk-new.cpio.gz $(pwd)/ramdisk/$EK_VARIANT/split_img/boot.img-ramdisk.cpio.gz
             echo " "
             echo "------------------------------------------"
             echo "Kernel build finished."
